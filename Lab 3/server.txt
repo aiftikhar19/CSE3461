@@ -1,0 +1,19 @@
+Server-1: EPSILON
+
+hostname: cse-epsilon.coeit.osu.edu
+IP address: 164.107.113.21
+
+Server-2: ZETA
+
+hostname: cse-zeta.coeit.osu.edu
+IP address: 164.107.113.22
+
+local port system-2: 4567
+client port system-1: 3456 (hardcoded)
+troll port system-1: 2345
+
+My commands:
+On system 2 (server):  python3 ftps.py 4567
+On system 1 (troll): troll -C 164.107.113.21 -S 164.107.113.22 -a 3456 -b 4567 -r -s 1 -t -x 0 2345
+On system 1 (client): python3 ftpc.py 164.107.113.21 4567 2345 test.jpg
+

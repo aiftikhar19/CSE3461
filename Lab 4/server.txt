@@ -1,0 +1,32 @@
+Server 1: EPSILON
+cse-epsilon.coeit.osu.edu
+inet 164.107.113.21  netmask 255.255.255.0  broadcast 164.107.113.255
+
+Server 2: ZETA
+cse-zeta.coeit.osu.edu
+inet 164.107.113.22  netmask 255.255.255.0  broadcast 164.107.113.255
+
+
+server port ZETA: 3000
+troll port ZETA: 3100
+client port EPSILON: 3200 (hardcoded)
+troll port EPSILON: 3300
+
+My commands:
+On system 2 (server):  python3 ftps.py 3000 3100
+On system 1 (troll): troll -C 164.107.113.21 -S 164.107.113.22 -a 3200 -b 3000 3300 -t -x 5
+On system 2 (troll): troll -C 164.107.113.22 -S 164.107.113.21 -a 3000 -b 3200 3100 -t -x 5
+On system 1 (client): python3 ftpc.py 164.107.113.22 3000 3300 test4.jpg
+
+List of Commands:
+ON ZETA:
+% python3 ftps.py <local-port-on-ZETA> <troll-port-on-ZETA>
+
+ON EPSILON:
+% troll -C <IP-address-of-EPSILON> -S <IP-address-of-ZETA> -a 3200 -b <server-port-on-ZETA> <troll-port-on-EPSILON> -t -x <packet-drop-\%>
+
+ON ZETA:
+% troll -C <IP-address-of-ZETA> -S <IP-address-of-EPSILON> -a <server-port-on-ZETA> -b 3200 <troll-port-on-ZETA> -t -x <packet-drop-\%>
+
+ON EPSILON:
+% python3 ftpc.py <IP-address-of-ZETA> <remote-port-on-ZETA> <troll-port-on-EPSILON> <local-file-to-transfer>
